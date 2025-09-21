@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom MUI X Date Pickers Styling */
+.MuiPickersPopper-root {
+  z-index: 9999 !important;
+}
+
+.MuiPickersCalendarHeader-root {
+  padding: 8px 16px;
+}
+
+.MuiPickersDay-root {
+  border-radius: 8px;
+  margin: 2px;
+}
+
+.MuiPickersDay-root.Mui-selected {
+  background-color: var(--mui-palette-primary-main) !important;
+  color: var(--mui-palette-primary-contrastText) !important;
+}
+
+.MuiPickersDay-root.Mui-selected:hover {
+  background-color: var(--mui-palette-primary-dark) !important;
+}
+
+.MuiPickersDay-root:hover {
+  background-color: var(--mui-palette-action-hover) !important;
+}
+
+.MuiPickersDay-root.MuiPickersDay-today {
+  border: 2px solid var(--mui-palette-primary-main) !important;
+}
+
+.MuiPickersCalendarHeader-switchViewButton {
+  color: var(--mui-palette-text-primary) !important;
+}
+
+.MuiPickersArrowSwitcher-button {
+  color: var(--mui-palette-text-primary) !important;
+}
+
+.MuiPickersArrowSwitcher-button:hover {
+  background-color: var(--mui-palette-action-hover) !important;
+}
+
 /* YekanBakh Font Family */
 @font-face {
   font-family: 'YekanBakh';

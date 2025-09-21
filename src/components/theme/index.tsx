@@ -10,6 +10,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import CssBaseline from '@mui/material/CssBaseline'
 import type {} from '@mui/material/themeCssVarsAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
 import type {} from '@mui/lab/themeAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
+import type {} from '@mui/x-date-pickers/themeAugmentation' //! Do not remove this import otherwise you will get type errors while making a production build
 
 // Third-party Imports
 import { useMedia } from 'react-use'

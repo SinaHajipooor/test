@@ -17,7 +17,6 @@ const DashboardPage = () => {
       <Grid size={{ xs: 12, md: 4 }}>
         <ApexDonutChart />
       </Grid>
-
       <Grid size={{ xs: 12, md: 8 }}>
         <RechartsBarChart />
       </Grid>

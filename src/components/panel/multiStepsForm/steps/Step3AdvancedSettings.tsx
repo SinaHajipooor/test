@@ -16,8 +16,6 @@ import IconButton from '@mui/material/IconButton'
 import Avatar from '@mui/material/Avatar'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 
 // Third-party Imports
 import { Controller, useForm } from 'react-hook-form'
@@ -56,8 +54,6 @@ const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps)
     mode: 'onChange',
     defaultValues: {
       bio: step3Data.bio || '',
-      appointmentDate: step3Data.appointmentDate || '',
-      appointmentTime: step3Data.appointmentTime || '',
       files: step3Data.files || [],
       notifications: step3Data.notifications || [],
       priority: step3Data.priority || ''
@@ -107,75 +103,6 @@ const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps)
                   updateStep3Data({ bio: e.target.value })
                 }}
               />
-            )}
-          />
-        </Grid>
-
-        {/* Appointment Date - Date Picker */}
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <Controller
-            name='appointmentDate'
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <Box>
-                <Typography variant='body2' sx={{ mb: 1 }}>
-                  تاریخ قرار ملاقات
-                </Typography>
-                <DatePicker
-                  selected={value ? new Date(value) : null}
-                  onChange={date => {
-                    const dateString = date ? date.toISOString() : ''
-
-                    onChange(dateString)
-                    updateStep3Data({ appointmentDate: dateString })
-                  }}
-                  dateFormat='yyyy/MM/dd'
-                  placeholderText='تاریخ قرار ملاقات را انتخاب کنید'
-                  customInput={
-                    <TextField
-                      fullWidth
-                      error={!!errors.appointmentDate}
-                      helperText={errors.appointmentDate?.message}
-                    />
-                  }
-                />
-              </Box>
-            )}
-          />
-        </Grid>
-
-        {/* Appointment Time - DateTime Picker */}
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <Controller
-            name='appointmentTime'
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <Box>
-                <Typography variant='body2' sx={{ mb: 1 }}>
-                  زمان قرار ملاقات
-                </Typography>
-                <DatePicker
-                  selected={value ? new Date(value) : null}
-                  onChange={date => {
-                    const dateString = date ? date.toISOString() : ''
-
-                    onChange(dateString)
-                    updateStep3Data({ appointmentTime: dateString })
-                  }}
-                  showTimeSelect
-                  timeFormat='HH:mm'
-                  timeIntervals={15}
-                  dateFormat='yyyy/MM/dd HH:mm'
-                  placeholderText='زمان قرار ملاقات را انتخاب کنید'
-                  customInput={
-                    <TextField
-                      fullWidth
-                      error={!!errors.appointmentTime}
-                      helperText={errors.appointmentTime?.message}
-                    />
-                  }
-                />
-              </Box>
             )}
           />
         </Grid>

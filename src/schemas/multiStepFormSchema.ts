@@ -1,4 +1,18 @@
-import { email, object, minLength, string, array, forward, pipe, nonEmpty, check, boolean, url, regex } from 'valibot'
+import {
+  email,
+  object,
+  minLength,
+  string,
+  array,
+  forward,
+  pipe,
+  nonEmpty,
+  check,
+  boolean,
+  url,
+  regex,
+  maxLength
+} from 'valibot'
 
 // Step 1: Account Information Schema
 export const accountSchema = pipe(
@@ -38,6 +52,7 @@ export const personalSchema = object({
   language: pipe(array(string()), nonEmpty('حداقل یک زبان انتخاب کنید'), minLength(1, 'حداقل یک زبان انتخاب کنید')),
   gender: pipe(string(), nonEmpty('جنسیت الزامی است')),
   birthDate: pipe(string(), nonEmpty('تاریخ تولد الزامی است')),
+  registrationDate: pipe(string(), nonEmpty('تاریخ و زمان ثبت نام الزامی است')),
   experience: pipe(string(), nonEmpty('سطح تجربه الزامی است')),
   skills: pipe(array(string()), nonEmpty('حداقل یک مهارت انتخاب کنید'), minLength(1, 'حداقل یک مهارت انتخاب کنید')),
   newsletter: boolean(),
@@ -50,10 +65,8 @@ export const advancedSchema = object({
     string(),
     nonEmpty('بیوگرافی الزامی است'),
     minLength(10, 'بیوگرافی باید حداقل ۱۰ کاراکتر باشد'),
-    minLength(100, 'بیوگرافی باید حداکثر 100 کاراکتر باشد')
+    maxLength(100, 'بیوگرافی باید حداکثر 100 کاراکتر باشد')
   ),
-  appointmentDate: pipe(string(), nonEmpty('تاریخ قرار ملاقات الزامی است')),
-  appointmentTime: pipe(string(), nonEmpty('زمان قرار ملاقات الزامی است')),
   files: pipe(array(string()), nonEmpty('حداقل یک فایل آپلود کنید'), minLength(1, 'حداقل یک فایل آپلود کنید')),
   notifications: pipe(
     array(string()),

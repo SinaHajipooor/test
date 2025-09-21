@@ -16,6 +16,7 @@ export interface PersonalFormData {
   language: string[]
   gender: string
   birthDate: string
+  registrationDate: string
   experience: string
   skills: string[]
   newsletter: boolean
@@ -24,8 +25,6 @@ export interface PersonalFormData {
 
 export interface AdvancedFormData {
   bio: string
-  appointmentDate: string
-  appointmentTime: string
   files: string[]
   notifications: string[]
   priority: string
