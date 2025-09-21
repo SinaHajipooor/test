@@ -7,13 +7,24 @@ import dynamic from 'next/dynamic'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
 import { Typography } from '@mui/material'
 
+// Hook Imports
+import { useDashboardFilters } from '@/contexts/DashboardContext'
+
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
+
+// Type Imports
+import type { AreaChartData } from '@/services/dashboardApi'
 
 // Vars
 const areaColors = {
@@ -22,7 +33,8 @@ const areaColors = {
   series3: '#e0cffe'
 }
 
-const series = [
+// Default data
+const defaultSeries = [
   {
     name: 'بازدیدها',
     data: [100, 120, 90, 170, 130, 160, 140, 240, 220, 180, 270, 280, 375]
@@ -37,7 +49,28 @@ const series = [
   }
 ]
 
-const ApexAreaChart = () => {
+interface ApexAreaChartProps {
+  data?: AreaChartData
+}
+
+const ApexAreaChart = ({ data }: ApexAreaChartProps) => {
+  const { filters, updateFilters } = useDashboardFilters()
+
+  // Use provided data or default data
+  const series =
+    data?.series?.map(s => ({
+      name: s.name,
+      data: s.data.map(d => d.y)
+    })) || defaultSeries
+
+  const handlePeriodChange = (event: any) => {
+    updateFilters({ period: event.target.value })
+  }
+
+  const handleCategoryChange = (event: any) => {
+    updateFilters({ category: event.target.value })
+  }
+
   // Vars
   const divider = 'var(--mui-palette-divider)'
   const textDisabled = 'var(--mui-palette-text-disabled)'
@@ -91,7 +124,7 @@ const ApexAreaChart = () => {
       labels: {
         style: { colors: textDisabled, fontSize: '13px', fontFamily: 'YekanBakh' }
       },
-      categories: [
+      categories: data?.series[0]?.data?.map(item => item.x) || [
         '7/12',
         '8/12',
         '9/12',
@@ -117,6 +150,30 @@ const ApexAreaChart = () => {
           <Typography variant='caption'>
             می‌توانید نمودار مربوط به آخرین به‌روزرسانی‌ها را برای هر ماه ببینید.
           </Typography>
+        }
+        action={
+          <Box sx={{ display: 'flex', gap: 2, minWidth: 200 }}>
+            <FormControl size='small' sx={{ minWidth: 120 }}>
+              <InputLabel>دوره</InputLabel>
+              <Select value={filters.period || 'daily'} label='دوره' onChange={handlePeriodChange}>
+                <MenuItem value='daily'>روزانه</MenuItem>
+                <MenuItem value='weekly'>هفتگی</MenuItem>
+                <MenuItem value='monthly'>ماهانه</MenuItem>
+                <MenuItem value='yearly'>سالانه</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl size='small' sx={{ minWidth: 120 }}>
+              <InputLabel>دسته‌بندی</InputLabel>
+              <Select value={filters.category || 'همه'} label='دسته‌بندی' onChange={handleCategoryChange}>
+                <MenuItem value='همه'>همه</MenuItem>
+                <MenuItem value='الکترونیک'>الکترونیک</MenuItem>
+                <MenuItem value='پوشاک'>پوشاک</MenuItem>
+                <MenuItem value='کتاب'>کتاب</MenuItem>
+                <MenuItem value='ورزش'>ورزش</MenuItem>
+                <MenuItem value='خانه'>خانه</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         }
         sx={{
           flexDirection: ['column', 'row'],
