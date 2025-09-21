@@ -1,5 +1,8 @@
 'use client'
 
+// React Imports
+import { useEffect } from 'react'
+
 // MUI Imports
 import Grid from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
@@ -38,7 +41,8 @@ interface Step3AdvancedSettingsProps {
 
 const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps) => {
   // Store
-  const { step3Data, updateStep3Data, uploadedFiles, addUploadedFile, removeUploadedFile } = useFormStore()
+  const { step3Data, updateStep3Data, uploadedFiles, addUploadedFile, removeUploadedFile, restoreFiles } =
+    useFormStore()
 
   // Vars
   const Notifications = ['ایمیل', 'پیامک', 'اعلان‌های مرورگر', 'تلگرام']
@@ -60,10 +64,17 @@ const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps)
     }
   })
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Restore files on component mount
+  useEffect(() => {
+    restoreFiles()
+  }, [restoreFiles])
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || [])
 
-    files.forEach(file => addUploadedFile(file))
+    for (const file of files) {
+      await addUploadedFile(file)
+    }
   }
 
   const handleFileRemove = (index: number) => {

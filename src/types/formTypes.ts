@@ -36,6 +36,15 @@ export interface MultiStepFormData {
   step3: AdvancedFormData
 }
 
+// File metadata interface for persistence
+export interface FileMetadata {
+  name: string
+  size: number
+  type: string
+  lastModified: number
+  dataUrl: string // Base64 encoded file data
+}
+
 // Store types
 export interface FormState {
   currentStep: number
@@ -43,6 +52,7 @@ export interface FormState {
   step2Data: Partial<PersonalFormData>
   step3Data: Partial<AdvancedFormData>
   uploadedFiles: File[]
+  persistedFiles: FileMetadata[]
 }
 
 export interface FormActions {
@@ -50,9 +60,10 @@ export interface FormActions {
   updateStep1Data: (data: Partial<AccountFormData>) => void
   updateStep2Data: (data: Partial<PersonalFormData>) => void
   updateStep3Data: (data: Partial<AdvancedFormData>) => void
-  addUploadedFile: (file: File) => void
+  addUploadedFile: (file: File) => Promise<void>
   removeUploadedFile: (index: number) => void
   clearUploadedFiles: () => void
+  restoreFiles: () => void
   resetForm: () => void
   getFormData: () => {
     step1: Partial<AccountFormData>
