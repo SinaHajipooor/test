@@ -1,54 +1,38 @@
 // MUI Imports
 import type { Theme } from '@mui/material/styles'
 
-const typography = (fontFamily: string): Theme['typography'] =>
+const typography = (): Theme['typography'] =>
   ({
-    fontFamily:
-      typeof fontFamily === 'undefined' || fontFamily === ''
-        ? [
-            'Inter',
-            'sans-serif',
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"'
-          ].join(',')
-        : fontFamily,
+    fontFamily: 'YekanBakh',
     fontSize: 13.125,
     h1: {
       fontSize: '2.875rem',
-      fontWeight: 500,
+      fontWeight: 900,
       lineHeight: 1.478261
     },
     h2: {
       fontSize: '2.375rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.47368421
     },
     h3: {
       fontSize: '1.75rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.5
     },
     h4: {
       fontSize: '1.5rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.58334
     },
     h5: {
       fontSize: '1.125rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.5556
     },
     h6: {
       fontSize: '0.9375rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.46667
     },
     subtitle1: {
@@ -70,6 +54,7 @@ const typography = (fontFamily: string): Theme['typography'] =>
     },
     button: {
       fontSize: '0.9375rem',
+      fontWeight: 700,
       lineHeight: 1.46667,
       textTransform: 'none'
     },

@@ -14,7 +14,7 @@ const Layout = async (props: Props) => {
   const { children } = props
 
   // Vars
-  const direction = 'ltr'
+  const direction = 'rtl'
   const systemMode = await getSystemMode()
 
   return (

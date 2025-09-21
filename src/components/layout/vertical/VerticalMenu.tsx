@@ -69,10 +69,10 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
         <MenuItem href='/home' icon={<i className='ri-home-smile-line' />}>
-          Home
+          داشبورد
         </MenuItem>
         <MenuItem href='/about' icon={<i className='ri-information-line' />}>
-          About
+          فرم چند مرحله‌ای
         </MenuItem>
       </Menu>
       {/* <Menu

@@ -8,7 +8,7 @@ import { getServerMode, getSystemMode } from '@core/utils/serverHelpers'
 
 const NotFoundPage = async () => {
   // Vars
-  const direction = 'ltr'
+  const direction = 'rtl'
   const mode = await getServerMode()
   const systemMode = await getSystemMode()
 

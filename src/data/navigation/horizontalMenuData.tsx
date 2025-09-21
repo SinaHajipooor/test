@@ -3,12 +3,12 @@ import type { HorizontalMenuDataType } from '@/types/menuTypes'
 
 const horizontalMenuData = (): HorizontalMenuDataType[] => [
   {
-    label: 'Home',
+    label: 'داشبورد',
     href: '/home',
     icon: 'ri-home-smile-line'
   },
   {
-    label: 'About',
+    label: 'فرم چند مرحله‌ای',
     href: '/about',
     icon: 'ri-information-line'
   }

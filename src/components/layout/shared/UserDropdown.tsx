@@ -62,11 +62,6 @@ const UserDropdown = () => {
     setOpen(false)
   }
 
-  const handleUserLogout = async () => {
-    // Redirect to login page
-    router.push('/login')
-  }
-
   return (
     <>
       <Badge
@@ -108,29 +103,28 @@ const UserDropdown = () => {
                   <div className='flex items-center plb-2 pli-4 gap-2' tabIndex={-1}>
                     <Avatar alt='John Doe' src='/images/avatars/1.png' />
                     <div className='flex items-start flex-col'>
-                      <Typography variant='body2' className='font-medium' color='text.primary'>
-                        John Doe
+                      <Typography variant='body1' className='font-medium' color='text.primary'>
+                        سینا حاجی پور
                       </Typography>
-                      <Typography variant='caption'>admin@materialize.com</Typography>
+                      <Typography fontSize={11} mt={1} variant='caption'>
+                        dev.sinahajipour@gmail.com
+                      </Typography>
                     </div>
                   </div>
                   <Divider className='mlb-1' />
                   <MenuItem className='gap-3 pli-4' onClick={e => handleDropdownClose(e)}>
                     <i className='ri-user-3-line' />
-                    <Typography color='text.primary'>My Profile</Typography>
+                    <Typography variant='caption' color='text.primary'>
+                      حساب کاربری
+                    </Typography>
                   </MenuItem>
                   <MenuItem className='gap-3 pli-4' onClick={e => handleDropdownClose(e)}>
                     <i className='ri-settings-4-line' />
-                    <Typography color='text.primary'>Settings</Typography>
+                    <Typography variant='caption' color='text.primary'>
+                      تنظیمات
+                    </Typography>
                   </MenuItem>
-                  <MenuItem className='gap-3 pli-4' onClick={e => handleDropdownClose(e)}>
-                    <i className='ri-money-dollar-circle-line' />
-                    <Typography color='text.primary'>Pricing</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3 pli-4' onClick={e => handleDropdownClose(e)}>
-                    <i className='ri-question-line' />
-                    <Typography color='text.primary'>FAQ</Typography>
-                  </MenuItem>
+
                   <div className='flex items-center plb-1.5 pli-4'>
                     <Button
                       fullWidth
@@ -138,9 +132,8 @@ const UserDropdown = () => {
                       color='error'
                       size='small'
                       endIcon={<i className='ri-logout-box-r-line' />}
-                      onClick={handleUserLogout}
                     >
-                      Logout
+                      خروج
                     </Button>
                   </div>
                 </MenuList>

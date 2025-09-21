@@ -27,6 +27,10 @@ export default plugin(function () {}, {
       '2xl': '1920px'
     },
     extend: {
+      fontFamily: {
+        sans: ['YekanBakh', 'Inter', 'sans-serif'],
+        yekan: ['YekanBakh', 'sans-serif']
+      },
       boxShadow: {
         xs: 'var(--mui-customShadows-xs)',
         sm: 'var(--mui-customShadows-sm)',
