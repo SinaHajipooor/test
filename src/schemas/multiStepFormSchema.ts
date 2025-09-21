@@ -1,18 +1,4 @@
-import {
-  email,
-  object,
-  minLength,
-  string,
-  array,
-  forward,
-  pipe,
-  nonEmpty,
-  check,
-  boolean,
-  url,
-  regex,
-  maxLength
-} from 'valibot'
+import { email, object, minLength, string, array, forward, pipe, nonEmpty, check, boolean, url, regex } from 'valibot'
 
 // Step 1: Account Information Schema
 export const accountSchema = pipe(
@@ -61,12 +47,7 @@ export const personalSchema = object({
 
 // Step 3: Advanced Settings Schema
 export const advancedSchema = object({
-  bio: pipe(
-    string(),
-    nonEmpty('بیوگرافی الزامی است'),
-    minLength(10, 'بیوگرافی باید حداقل ۱۰ کاراکتر باشد'),
-    maxLength(100, 'بیوگرافی باید حداکثر 100 کاراکتر باشد')
-  ),
+  bio: pipe(string(), nonEmpty('بیوگرافی الزامی است')),
   files: pipe(array(string()), nonEmpty('حداقل یک فایل آپلود کنید'), minLength(1, 'حداقل یک فایل آپلود کنید')),
   notifications: pipe(
     array(string()),

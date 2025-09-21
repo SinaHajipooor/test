@@ -23,6 +23,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 // Third-party Imports
 import { Controller, useForm } from 'react-hook-form'
 import { valibotResolver } from '@hookform/resolvers/valibot'
+import { toast } from 'react-toastify'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
@@ -52,6 +53,7 @@ const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps)
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors, isValid }
   } = useForm<AdvancedFormData>({
     resolver: valibotResolver(advancedSchema),
@@ -69,20 +71,49 @@ const Step3AdvancedSettings = ({ onBack, onSubmit }: Step3AdvancedSettingsProps)
     restoreFiles()
   }, [restoreFiles])
 
+  // Sync form files field when uploadedFiles changes
+  useEffect(() => {
+    setValue(
+      'files',
+      uploadedFiles.map(file => file.name)
+    )
+    updateStep3Data({ files: uploadedFiles.map(file => file.name) })
+  }, [uploadedFiles, setValue, updateStep3Data])
+
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || [])
 
     for (const file of files) {
       await addUploadedFile(file)
     }
+
+    // Update form files field for validation
+    const updatedFiles = [...uploadedFiles, ...files]
+
+    setValue(
+      'files',
+      updatedFiles.map(file => file.name)
+    )
+    updateStep3Data({ files: updatedFiles.map(file => file.name) })
   }
 
   const handleFileRemove = (index: number) => {
     removeUploadedFile(index)
+
+    // Update form files field for validation
+    const updatedFiles = uploadedFiles.filter((_, i) => i !== index)
+
+    setValue(
+      'files',
+      updatedFiles.map(file => file.name)
+    )
+    updateStep3Data({ files: updatedFiles.map(file => file.name) })
   }
 
   const handleFormSubmit = (data: AdvancedFormData) => {
     updateStep3Data(data)
+    alert('Form submitted')
+    toast.success('Form submitted')
     onSubmit()
   }
 
