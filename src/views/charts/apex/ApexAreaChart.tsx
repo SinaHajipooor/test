@@ -5,12 +5,12 @@ import dynamic from 'next/dynamic'
 
 // MUI Imports
 import Card from '@mui/material/Card'
-import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
+import { Typography } from '@mui/material'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
@@ -38,9 +38,6 @@ const series = [
 ]
 
 const ApexAreaChart = () => {
-  // Hooks
-  const theme = useTheme()
-
   // Vars
   const divider = 'var(--mui-palette-divider)'
   const textDisabled = 'var(--mui-palette-text-disabled)'
@@ -58,18 +55,19 @@ const ApexAreaChart = () => {
     },
     legend: {
       position: 'top',
-      horizontalAlign: 'right',
+      horizontalAlign: 'left',
       labels: { colors: 'var(--mui-palette-text-secondary)' },
       fontSize: '13px',
       markers: {
         offsetY: 2,
-        offsetX: theme.direction === 'rtl' ? 7 : -4
+        offsetX: 3
       },
-      itemMargin: { horizontal: 9 }
+      itemMargin: { horizontal: 10 }
     },
     colors: [areaColors.series3, areaColors.series2, areaColors.series1],
     fill: {
       opacity: 1,
+
       type: 'solid'
     },
     grid: {
@@ -94,19 +92,19 @@ const ApexAreaChart = () => {
         style: { colors: textDisabled, fontSize: '13px', fontFamily: 'YekanBakh' }
       },
       categories: [
-        '۷/۱۲',
-        '۸/۱۲',
-        '۹/۱۲',
-        '۱۰/۱۲',
-        '۱۱/۱۲',
-        '۱۲/۱۲',
-        '۱۳/۱۲',
-        '۱۴/۱۲',
-        '۱۵/۱۲',
-        '۱۶/۱۲',
-        '۱۷/۱۲',
-        '۱۸/۱۲',
-        '۱۹/۱۲'
+        '7/12',
+        '8/12',
+        '9/12',
+        '10/12',
+        '11/12',
+        '12/12',
+        '13/12',
+        '14/12',
+        '15/12',
+        '16/12',
+        '17/12',
+        '18/12',
+        '19/12'
       ]
     }
   }
@@ -115,7 +113,11 @@ const ApexAreaChart = () => {
     <Card>
       <CardHeader
         title='آخرین به‌روزرسانی‌ها'
-        subheader='شبکه‌های تجاری'
+        subheader={
+          <Typography variant='caption'>
+            می‌توانید نمودار مربوط به آخرین به‌روزرسانی‌ها را برای هر ماه ببینید.
+          </Typography>
+        }
         sx={{
           flexDirection: ['column', 'row'],
           alignItems: ['flex-start', 'center'],

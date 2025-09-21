@@ -17,6 +17,7 @@
         "apexcharts": "3.49.0",
         "react-apexcharts": "1.4.1",
         "@iconify/react": "4.1.0",
+        "recharts": "2.15.0",
         "@emotion/cache": "11.14.0",
         "@emotion/react": "11.14.0",
         "@emotion/styled": "11.14.0",

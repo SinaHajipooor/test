@@ -11,6 +11,7 @@ import CardContent from '@mui/material/CardContent'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
+import { Typography } from '@mui/material'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
@@ -117,9 +118,12 @@ const ApexDonutChart = () => {
 
   return (
     <Card>
-      <CardHeader title='نسبت هزینه' subheader='هزینه در دسته\u200cبندی\u200cهای مختلف' />
+      <CardHeader
+        title='مقایسه هزینه‌ها'
+        subheader={<Typography variant='caption'>مقایسه هزینه‌ها در دسته بندی‌های مختلف</Typography>}
+      />
       <CardContent>
-        <AppReactApexCharts type='donut' width='100%' height={400} options={options} series={[85, 16, 50, 50]} />
+        <AppReactApexCharts type='donut' width='100%' height={430} options={options} series={[85, 16, 50, 50]} />
       </CardContent>
     </Card>
   )

@@ -11,6 +11,7 @@ import CardContent from '@mui/material/CardContent'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
+import { Typography } from '@mui/material'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
@@ -92,6 +93,7 @@ const ApexRadarChart = () => {
       labels: {
         style: {
           fontSize: '13px',
+
           colors: [
             textDisabled,
             textDisabled,
@@ -109,9 +111,14 @@ const ApexRadarChart = () => {
 
   return (
     <Card>
-      <CardHeader title='مقایسه موبایل' />
+      <CardHeader
+        title='شاخص‌های موبایل'
+        subheader={
+          <Typography variant='caption'>می‌توایند مقایسه مربوط به شاخص‌های مختلف موبایل را مشاهده نمایید</Typography>
+        }
+      />
       <CardContent>
-        <AppReactApexCharts type='radar' width='100%' height={400} options={options} series={series} />
+        <AppReactApexCharts type='radar' width='100%' height={385} options={options} series={series} />
       </CardContent>
     </Card>
   )

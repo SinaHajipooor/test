@@ -68,7 +68,7 @@ const UserDropdown = () => {
         ref={anchorRef}
         overlap='circular'
         badgeContent={<BadgeContentSpan onClick={handleDropdownOpen} />}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         className='mis-2'
       >
         <Avatar
@@ -103,7 +103,7 @@ const UserDropdown = () => {
                   <div className='flex items-center plb-2 pli-4 gap-2' tabIndex={-1}>
                     <Avatar alt='John Doe' src='/images/avatars/1.png' />
                     <div className='flex items-start flex-col'>
-                      <Typography variant='body1' className='font-medium' color='text.primary'>
+                      <Typography variant='h6' fontSize={14} color='text.primary'>
                         سینا حاجی پور
                       </Typography>
                       <Typography fontSize={11} mt={1} variant='caption'>

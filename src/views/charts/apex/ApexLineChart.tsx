@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
+import { Typography } from '@mui/material'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
@@ -70,21 +71,21 @@ const ApexLineChart = () => {
         style: { colors: disabledText, fontSize: '13px', fontFamily: 'YekanBakh' }
       },
       categories: [
-        '۷/۱۲',
-        '۸/۱۲',
-        '۹/۱۲',
-        '۱۰/۱۲',
-        '۱۱/۱۲',
-        '۱۲/۱۲',
-        '۱۳/۱۲',
-        '۱۴/۱۲',
-        '۱۵/۱۲',
-        '۱۶/۱۲',
-        '۱۷/۱۲',
-        '۱۸/۱۲',
-        '۱۹/۱۲',
-        '۲۰/۱۲',
-        '۲۱/۱۲'
+        '7/12',
+        '8/12',
+        '9/12',
+        '10/12',
+        '11/12',
+        '12/12',
+        '13/12',
+        '14/12',
+        '15/12',
+        '16/12',
+        '17/12',
+        '18/12',
+        '19/12',
+        '20/12',
+        '21/12'
       ]
     }
   }
@@ -92,8 +93,8 @@ const ApexLineChart = () => {
   return (
     <Card>
       <CardHeader
-        title='تراز'
-        subheader='شبکه‌های تجاری و شرکت‌ها'
+        title='درصد پیشرفت فروش'
+        subheader={<Typography variant='caption'>می‌توانید درصد پیشرفت فروش برای هر ماه را مشاهده نمایید</Typography>}
         sx={{
           flexDirection: ['column', 'row'],
           alignItems: ['flex-start', 'center'],
