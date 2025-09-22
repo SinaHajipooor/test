@@ -56,34 +56,53 @@ const generateRandomData = (count: number, min: number = 0, max: number = 100): 
 }
 
 // Utility function to generate date labels
-const generateDateLabels = (count: number, period: 'daily' | 'weekly' | 'monthly' | 'yearly' = 'daily'): string[] => {
+const generateDateLabels = (
+  count: number,
+  period: 'daily' | 'weekly' | 'monthly' | 'yearly' = 'daily',
+  dateRange?: { start: string; end: string }
+): string[] => {
   const labels: string[] = []
-  const now = new Date()
 
-  for (let i = count - 1; i >= 0; i--) {
-    const date = new Date(now)
+  let startDate: Date
+  let endDate: Date
+
+  if (dateRange) {
+    startDate = new Date(dateRange.start)
+    endDate = new Date(dateRange.end)
+  } else {
+    endDate = new Date()
+    startDate = new Date()
+    startDate.setDate(startDate.getDate() - count + 1)
+  }
+
+  const timeDiff = endDate.getTime() - startDate.getTime()
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
+
+  for (let i = 0; i < count; i++) {
+    const date = new Date(startDate)
+    const step = Math.floor((daysDiff / (count - 1)) * i)
 
     switch (period) {
       case 'daily':
-        date.setDate(date.getDate() - i)
+        date.setDate(date.getDate() + step)
         labels.push(date.toLocaleDateString('fa-IR'))
         break
       case 'weekly':
-        date.setDate(date.getDate() - i * 7)
+        date.setDate(date.getDate() + step * 7)
         labels.push(`هفته ${i + 1}`)
         break
       case 'monthly':
-        date.setMonth(date.getMonth() - i)
+        date.setMonth(date.getMonth() + step)
         labels.push(date.toLocaleDateString('fa-IR', { month: 'long' }))
         break
       case 'yearly':
-        date.setFullYear(date.getFullYear() - i)
+        date.setFullYear(date.getFullYear() + step)
         labels.push(date.getFullYear().toString())
         break
     }
   }
 
-  return labels.reverse()
+  return labels
 }
 
 // Fake API functions with simulated delay
@@ -93,22 +112,33 @@ export const dashboardApi = {
     await new Promise(resolve => setTimeout(resolve, 300)) // Simulate API delay
 
     const period = filters?.period || 'daily'
-    const labels = generateDateLabels(7, period)
+    const labels = generateDateLabels(7, period, filters?.dateRange)
+
+    // Apply category filtering
+    const category = filters?.category || 'همه'
+    const baseMultiplier = category === 'همه' ? 1 : 0.7 + Math.random() * 0.6 // Vary data based on category
 
     return {
       series: [
         {
-          name: 'فروش',
+          name: 'بازدیدها',
           data: labels.map((label, index) => ({
             x: label,
-            y: generateRandomData(1, 1000, 5000)[0]
+            y: Math.floor(generateRandomData(1, 100, 500)[0] * baseMultiplier)
           }))
         },
         {
-          name: 'درآمد',
+          name: 'کلیک‌ها',
           data: labels.map((label, index) => ({
             x: label,
-            y: generateRandomData(1, 800, 4000)[0]
+            y: Math.floor(generateRandomData(1, 60, 300)[0] * baseMultiplier)
+          }))
+        },
+        {
+          name: 'فروش',
+          data: labels.map((label, index) => ({
+            x: label,
+            y: Math.floor(generateRandomData(1, 20, 200)[0] * baseMultiplier)
           }))
         }
       ]
@@ -120,29 +150,15 @@ export const dashboardApi = {
     await new Promise(resolve => setTimeout(resolve, 250))
 
     const period = filters?.period || 'daily'
-    const labels = generateDateLabels(12, period)
+    const labels = generateDateLabels(15, period, filters?.dateRange)
 
     return {
       series: [
         {
-          name: 'کاربران فعال',
+          name: 'درصد پیشرفت فروش',
           data: labels.map((label, index) => ({
             x: label,
-            y: generateRandomData(1, 50, 500)[0]
-          }))
-        },
-        {
-          name: 'بازدیدکنندگان',
-          data: labels.map((label, index) => ({
-            x: label,
-            y: generateRandomData(1, 100, 1000)[0]
-          }))
-        },
-        {
-          name: 'تبدیل',
-          data: labels.map((label, index) => ({
-            x: label,
-            y: generateRandomData(1, 10, 100)[0]
+            y: generateRandomData(1, 20, 100)[0]
           }))
         }
       ]
@@ -153,15 +169,37 @@ export const dashboardApi = {
   getBarChartData: async (filters?: DashboardFilters): Promise<BarChartData> => {
     await new Promise(resolve => setTimeout(resolve, 200))
 
-    const categories = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور']
+    const period = filters?.period || 'daily'
+    const labels = generateDateLabels(10, period, filters?.dateRange)
 
     return {
       series: [
         {
-          name: 'محصولات فروخته شده',
-          data: categories.map(category => ({
-            x: category,
-            y: generateRandomData(1, 20, 200)[0]
+          name: 'Apple',
+          data: labels.map((label, index) => ({
+            x: label,
+            y: generateRandomData(1, 30, 200)[0]
+          }))
+        },
+        {
+          name: 'Samsung',
+          data: labels.map((label, index) => ({
+            x: label,
+            y: generateRandomData(1, 40, 250)[0]
+          }))
+        },
+        {
+          name: 'Oneplus',
+          data: labels.map((label, index) => ({
+            x: label,
+            y: generateRandomData(1, 20, 180)[0]
+          }))
+        },
+        {
+          name: 'Motorola',
+          data: labels.map((label, index) => ({
+            x: label,
+            y: generateRandomData(1, 50, 300)[0]
           }))
         }
       ]

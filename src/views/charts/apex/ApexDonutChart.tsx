@@ -8,10 +8,14 @@ import Card from '@mui/material/Card'
 import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import Skeleton from '@mui/material/Skeleton'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
 import { Typography } from '@mui/material'
+
+// Hook Imports
+import { useDonutChartData } from '@/hooks/useDashboardData'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
@@ -28,14 +32,39 @@ const donutColors = {
 const ApexDonutChart = () => {
   // Hooks
   const theme = useTheme()
+  const { data: chartData, isLoading, error } = useDonutChartData()
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader
+          title='مقایسه هزینه‌ها'
+          subheader={<Typography variant='caption'>مقایسه هزینه‌ها در دسته بندی‌های مختلف</Typography>}
+        />
+        <CardContent>
+          <Skeleton variant='circular' width={430} height={430} sx={{ mx: 'auto' }} />
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card>
+        <CardContent>
+          <Typography color='error'>خطا در بارگذاری داده‌ها</Typography>
+        </CardContent>
+      </Card>
+    )
+  }
 
   // Vars
   const textSecondary = 'var(--mui-palette-text-secondary)'
 
   const options: ApexOptions = {
     stroke: { width: 0 },
-    labels: ['عملیاتی', 'شبکه‌سازی', 'استخدام', 'تحقیق و توسعه'],
-    colors: [donutColors.series1, donutColors.series5, donutColors.series3, donutColors.series2],
+    labels: chartData?.labels || [],
+    colors: [donutColors.series1, donutColors.series5, donutColors.series3, donutColors.series2, donutColors.series4],
     dataLabels: {
       enabled: true,
       formatter: (val: string) => `${parseInt(val, 10)}%`
@@ -123,7 +152,7 @@ const ApexDonutChart = () => {
         subheader={<Typography variant='caption'>مقایسه هزینه‌ها در دسته بندی‌های مختلف</Typography>}
       />
       <CardContent>
-        <AppReactApexCharts type='donut' width='100%' height={430} options={options} series={[85, 16, 50, 50]} />
+        <AppReactApexCharts type='donut' width='100%' height={430} options={options} series={chartData?.series || []} />
       </CardContent>
     </Card>
   )

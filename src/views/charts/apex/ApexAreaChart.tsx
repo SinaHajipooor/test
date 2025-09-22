@@ -1,5 +1,8 @@
 'use client'
 
+// React Imports
+import { useState } from 'react'
+
 // Next Imports
 import dynamic from 'next/dynamic'
 
@@ -12,19 +15,17 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import Skeleton from '@mui/material/Skeleton'
 
 // Third-party Imports
 import type { ApexOptions } from 'apexcharts'
 import { Typography } from '@mui/material'
 
 // Hook Imports
-import { useDashboardFilters } from '@/contexts/DashboardContext'
+import { useAreaChartData, useFilterOptions } from '@/hooks/useDashboardData'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
-
-// Type Imports
-import type { AreaChartData } from '@/services/dashboardApi'
 
 // Vars
 const areaColors = {
@@ -33,42 +34,70 @@ const areaColors = {
   series3: '#e0cffe'
 }
 
-// Default data
-const defaultSeries = [
-  {
-    name: 'بازدیدها',
-    data: [100, 120, 90, 170, 130, 160, 140, 240, 220, 180, 270, 280, 375]
-  },
-  {
-    name: 'کلیک‌ها',
-    data: [60, 80, 70, 110, 80, 100, 90, 180, 160, 140, 200, 220, 275]
-  },
-  {
-    name: 'فروش',
-    data: [20, 40, 30, 70, 40, 60, 50, 140, 120, 100, 140, 180, 220]
-  }
-]
+const ApexAreaChart = () => {
+  // Local filter state for this chart only
+  const [localFilters, setLocalFilters] = useState({
+    period: 'daily' as 'daily' | 'weekly' | 'monthly' | 'yearly',
+    category: 'همه'
+  })
 
-interface ApexAreaChartProps {
-  data?: AreaChartData
-}
+  const { data: chartData, isLoading, isFetching, error } = useAreaChartData(localFilters)
+  const { data: filterOptions } = useFilterOptions()
 
-const ApexAreaChart = ({ data }: ApexAreaChartProps) => {
-  const { filters, updateFilters } = useDashboardFilters()
-
-  // Use provided data or default data
+  // Use API data or show loading state
   const series =
-    data?.series?.map(s => ({
+    chartData?.series?.map(s => ({
       name: s.name,
       data: s.data.map(d => d.y)
-    })) || defaultSeries
+    })) || []
+
+  // Only show skeleton on initial load (when there's no data yet)
+  if (isLoading && !(chartData as any)?.series?.length) {
+    return (
+      <Card>
+        <CardHeader
+          title='آخرین به‌روزرسانی‌ها'
+          subheader={
+            <Typography variant='caption'>
+              می‌توانید نمودار مربوط به آخرین به‌روزرسانی‌ها را برای هر ماه ببینید.
+            </Typography>
+          }
+          action={
+            <Box sx={{ display: 'flex', gap: 2, minWidth: 200 }}>
+              <Skeleton variant='rectangular' width={120} height={40} />
+              <Skeleton variant='rectangular' width={120} height={40} />
+            </Box>
+          }
+          sx={{
+            flexDirection: ['column', 'row'],
+            alignItems: ['flex-start', 'center'],
+            '& .MuiCardHeader-action': { mb: 0 },
+            '& .MuiCardHeader-content': { mb: [2, 0] }
+          }}
+        />
+        <CardContent>
+          <Skeleton variant='rectangular' width='100%' height={400} />
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card>
+        <CardContent>
+          <Typography color='error'>خطا در بارگذاری داده‌ها</Typography>
+        </CardContent>
+      </Card>
+    )
+  }
 
   const handlePeriodChange = (event: any) => {
-    updateFilters({ period: event.target.value })
+    setLocalFilters(prev => ({ ...prev, period: event.target.value }))
   }
 
   const handleCategoryChange = (event: any) => {
-    updateFilters({ category: event.target.value })
+    setLocalFilters(prev => ({ ...prev, category: event.target.value }))
   }
 
   // Vars
@@ -124,21 +153,7 @@ const ApexAreaChart = ({ data }: ApexAreaChartProps) => {
       labels: {
         style: { colors: textDisabled, fontSize: '13px', fontFamily: 'YekanBakh' }
       },
-      categories: data?.series[0]?.data?.map(item => item.x) || [
-        '7/12',
-        '8/12',
-        '9/12',
-        '10/12',
-        '11/12',
-        '12/12',
-        '13/12',
-        '14/12',
-        '15/12',
-        '16/12',
-        '17/12',
-        '18/12',
-        '19/12'
-      ]
+      categories: chartData?.series[0]?.data?.map(item => item.x) || []
     }
   }
 
@@ -152,27 +167,44 @@ const ApexAreaChart = ({ data }: ApexAreaChartProps) => {
           </Typography>
         }
         action={
-          <Box sx={{ display: 'flex', gap: 2, minWidth: 200 }}>
+          <Box sx={{ display: 'flex', gap: 2, minWidth: 200, position: 'relative' }}>
             <FormControl size='small' sx={{ minWidth: 120 }}>
               <InputLabel>دوره</InputLabel>
-              <Select value={filters.period || 'daily'} label='دوره' onChange={handlePeriodChange}>
-                <MenuItem value='daily'>روزانه</MenuItem>
-                <MenuItem value='weekly'>هفتگی</MenuItem>
-                <MenuItem value='monthly'>ماهانه</MenuItem>
-                <MenuItem value='yearly'>سالانه</MenuItem>
+              <Select value={localFilters.period} label='دوره' onChange={handlePeriodChange}>
+                {filterOptions?.periods?.map(period => (
+                  <MenuItem key={period.value} value={period.value}>
+                    {period.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl size='small' sx={{ minWidth: 120 }}>
               <InputLabel>دسته‌بندی</InputLabel>
-              <Select value={filters.category || 'همه'} label='دسته‌بندی' onChange={handleCategoryChange}>
-                <MenuItem value='همه'>همه</MenuItem>
-                <MenuItem value='الکترونیک'>الکترونیک</MenuItem>
-                <MenuItem value='پوشاک'>پوشاک</MenuItem>
-                <MenuItem value='کتاب'>کتاب</MenuItem>
-                <MenuItem value='ورزش'>ورزش</MenuItem>
-                <MenuItem value='خانه'>خانه</MenuItem>
+              <Select value={localFilters.category} label='دسته‌بندی' onChange={handleCategoryChange}>
+                {filterOptions?.categories?.map(category => (
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
+            {isFetching && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: -8,
+                  right: -8,
+                  width: 16,
+                  height: 16,
+                  borderRadius: '50%',
+                  backgroundColor: 'primary.main',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  animation: 'pulse 1.5s ease-in-out infinite'
+                }}
+              />
+            )}
           </Box>
         }
         sx={{

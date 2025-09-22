@@ -1,15 +1,8 @@
 // Custom hooks for dashboard data using React Query
 
-import { useQuery } from '@tanstack/react-query'
-import {
-  dashboardApi,
-  type DashboardFilters,
-  type AreaChartData,
-  type LineChartData,
-  type BarChartData,
-  type DonutChartData,
-  type RadarChartData
-} from '@/services/dashboardApi'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
+
+import { dashboardApi, type DashboardFilters } from '@/services/dashboardApi'
 
 // Query keys for caching
 export const dashboardQueryKeys = {
@@ -29,7 +22,8 @@ export const useAreaChartData = (filters?: DashboardFilters) => {
     queryFn: () => dashboardApi.getAreaChartData(filters),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData
   })
 }
 
@@ -40,7 +34,8 @@ export const useLineChartData = (filters?: DashboardFilters) => {
     queryFn: () => dashboardApi.getLineChartData(filters),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData
   })
 }
 
@@ -51,7 +46,8 @@ export const useBarChartData = (filters?: DashboardFilters) => {
     queryFn: () => dashboardApi.getBarChartData(filters),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData
   })
 }
 
@@ -62,7 +58,8 @@ export const useDonutChartData = (filters?: DashboardFilters) => {
     queryFn: () => dashboardApi.getDonutChartData(filters),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData
   })
 }
 

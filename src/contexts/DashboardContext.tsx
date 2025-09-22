@@ -21,7 +21,11 @@ interface DashboardProviderProps {
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const [filters, setFilters] = useState<DashboardFilters>({
     period: 'daily',
-    category: 'همه'
+    category: 'همه',
+    dateRange: {
+      start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days ago
+      end: new Date().toISOString().split('T')[0] // today
+    }
   })
 
   const updateFilters = useCallback((newFilters: Partial<DashboardFilters>) => {
@@ -31,7 +35,11 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const resetFilters = useCallback(() => {
     setFilters({
       period: 'daily',
-      category: 'همه'
+      category: 'همه',
+      dateRange: {
+        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        end: new Date().toISOString().split('T')[0]
+      }
     })
   }, [])
 
