@@ -1,6 +1,8 @@
 import { create } from 'zustand'
+
 import { persist } from 'zustand/middleware'
-import type { FormStore } from '@/types/formTypes'
+
+import type { AccountFormData, FormStore, PersonalFormData, AdvancedFormData } from '@/types/formTypes'
 
 // File metadata interface for persistence
 interface FileMetadata {
@@ -44,6 +46,7 @@ const useFormStore = create<FormStore>()(
         // Convert file to base64 for persistence
         const dataUrl = await new Promise<string>(resolve => {
           const reader = new FileReader()
+
           reader.onload = () => resolve(reader.result as string)
           reader.readAsDataURL(file)
         })
@@ -73,13 +76,16 @@ const useFormStore = create<FormStore>()(
       // Convert persisted files back to File objects
       restoreFiles: () => {
         const state = get()
+
         const restoredFiles = state.persistedFiles.map(metadata => {
           // Convert base64 back to blob
           const byteCharacters = atob(metadata.dataUrl.split(',')[1])
           const byteNumbers = new Array(byteCharacters.length)
-          for (let i = 0; i < byteCharacters.length; i++) {
+
+          for (let i = 0; i < byteCharacters.length; i += 1) {
             byteNumbers[i] = byteCharacters.charCodeAt(i)
           }
+
           const byteArray = new Uint8Array(byteNumbers)
           const blob = new Blob([byteArray], { type: metadata.type })
 
@@ -105,6 +111,7 @@ const useFormStore = create<FormStore>()(
 
       getFormData: () => {
         const state = get()
+
         return {
           step1: state.step1Data,
           step2: state.step2Data,

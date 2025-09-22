@@ -55,7 +55,7 @@ export const useBarChartData = (filters?: DashboardFilters) => {
 export const useDonutChartData = (filters?: DashboardFilters) => {
   return useQuery({
     queryKey: dashboardQueryKeys.donutChart(filters),
-    queryFn: () => dashboardApi.getDonutChartData(filters),
+    queryFn: () => dashboardApi.getDonutChartData(),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
@@ -67,7 +67,7 @@ export const useDonutChartData = (filters?: DashboardFilters) => {
 export const useRadarChartData = (filters?: DashboardFilters) => {
   return useQuery({
     queryKey: dashboardQueryKeys.radarChart(filters),
-    queryFn: () => dashboardApi.getRadarChartData(filters),
+    queryFn: () => dashboardApi.getRadarChartData(),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false

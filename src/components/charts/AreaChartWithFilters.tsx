@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
-
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -22,9 +19,6 @@ import ApexAreaChart from '@views/charts/apex/ApexAreaChart'
 // Hook Imports
 import { useAreaChartData } from '@/hooks/useDashboardData'
 import { useDashboardFilters } from '@/contexts/DashboardContext'
-
-// Type Imports
-import type { DashboardFilters } from '@/services/dashboardApi'
 
 const AreaChartWithFilters = () => {
   const { filters, updateFilters } = useDashboardFilters()
@@ -83,7 +77,7 @@ const AreaChartWithFilters = () => {
             <CircularProgress />
           </Box>
         ) : data ? (
-          <ApexAreaChart data={data} />
+          <ApexAreaChart />
         ) : (
           <Typography variant='body2' color='text.secondary' textAlign='center'>
             داده‌ای برای نمایش وجود ندارد

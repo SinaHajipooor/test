@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
-
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -88,7 +85,7 @@ const LineChartWithFilters = () => {
             <CircularProgress />
           </Box>
         ) : data ? (
-          <ApexLineChart data={data} />
+          <ApexLineChart />
         ) : (
           <Typography variant='body2' color='text.secondary' textAlign='center'>
             داده‌ای برای نمایش وجود ندارد

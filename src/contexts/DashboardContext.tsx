@@ -50,8 +50,10 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
 export const useDashboardFilters = () => {
   const context = useContext(DashboardContext)
+
   if (context === undefined) {
     throw new Error('useDashboardFilters must be used within a DashboardProvider')
   }
+
   return context
 }

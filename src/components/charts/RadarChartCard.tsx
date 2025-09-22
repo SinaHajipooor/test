@@ -39,7 +39,7 @@ const RadarChartCard = () => {
             <CircularProgress />
           </Box>
         ) : data ? (
-          <ApexRadarChart data={data} />
+          <ApexRadarChart />
         ) : (
           <Typography variant='body2' color='text.secondary' textAlign='center'>
             داده‌ای برای نمایش وجود ندارد

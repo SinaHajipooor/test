@@ -1,6 +1,8 @@
 'use client'
 
 // Next Imports
+import { useState } from 'react'
+
 import dynamic from 'next/dynamic'
 
 // MUI Imports
@@ -25,7 +27,6 @@ import type { Dayjs } from 'dayjs'
 import { useLineChartData } from '@/hooks/useDashboardData'
 
 // React Imports
-import { useState } from 'react'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))

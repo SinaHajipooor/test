@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
-
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -29,16 +26,12 @@ const BarChartWithFilters = () => {
   const { filters, updateFilters } = useDashboardFilters()
   const { data, isLoading, isError, error } = useBarChartData(filters)
 
-  const handlePeriodChange = (event: any) => {
-    updateFilters({ period: event.target.value })
-  }
-
   const handleCategoryChange = (event: any) => {
     updateFilters({ category: event.target.value })
   }
 
   const handleQuickFilter = (period: string) => {
-    updateFilters({ period })
+    updateFilters({ period: period as 'daily' | 'weekly' | 'monthly' })
   }
 
   if (isError) {
@@ -97,7 +90,7 @@ const BarChartWithFilters = () => {
             <CircularProgress />
           </Box>
         ) : data ? (
-          <RechartsBarChart data={data} />
+          <RechartsBarChart />
         ) : (
           <Typography variant='body2' color='text.secondary' textAlign='center'>
             داده‌ای برای نمایش وجود ندارد

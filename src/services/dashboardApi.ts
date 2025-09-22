@@ -122,21 +122,21 @@ export const dashboardApi = {
       series: [
         {
           name: 'بازدیدها',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: Math.floor(generateRandomData(1, 100, 500)[0] * baseMultiplier)
           }))
         },
         {
           name: 'کلیک‌ها',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: Math.floor(generateRandomData(1, 60, 300)[0] * baseMultiplier)
           }))
         },
         {
           name: 'فروش',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: Math.floor(generateRandomData(1, 20, 200)[0] * baseMultiplier)
           }))
@@ -156,7 +156,7 @@ export const dashboardApi = {
       series: [
         {
           name: 'درصد پیشرفت فروش',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: generateRandomData(1, 20, 100)[0]
           }))
@@ -176,28 +176,28 @@ export const dashboardApi = {
       series: [
         {
           name: 'Apple',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: generateRandomData(1, 30, 200)[0]
           }))
         },
         {
           name: 'Samsung',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: generateRandomData(1, 40, 250)[0]
           }))
         },
         {
           name: 'Oneplus',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: generateRandomData(1, 20, 180)[0]
           }))
         },
         {
           name: 'Motorola',
-          data: labels.map((label, index) => ({
+          data: labels.map(label => ({
             x: label,
             y: generateRandomData(1, 50, 300)[0]
           }))
@@ -207,7 +207,7 @@ export const dashboardApi = {
   },
 
   // Donut Chart Data
-  getDonutChartData: async (filters?: DashboardFilters): Promise<DonutChartData> => {
+  getDonutChartData: async (): Promise<DonutChartData> => {
     await new Promise(resolve => setTimeout(resolve, 150))
 
     return {
@@ -217,7 +217,7 @@ export const dashboardApi = {
   },
 
   // Radar Chart Data
-  getRadarChartData: async (filters?: DashboardFilters): Promise<RadarChartData> => {
+  getRadarChartData: async (): Promise<RadarChartData> => {
     await new Promise(resolve => setTimeout(resolve, 180))
 
     return {

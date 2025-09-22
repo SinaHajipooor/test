@@ -39,7 +39,7 @@ const DonutChartCard = () => {
             <CircularProgress />
           </Box>
         ) : data ? (
-          <ApexDonutChart data={data} />
+          <ApexDonutChart />
         ) : (
           <Typography variant='body2' color='text.secondary' textAlign='center'>
             داده‌ای برای نمایش وجود ندارد
